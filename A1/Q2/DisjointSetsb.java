@@ -17,7 +17,7 @@ public class DisjointSetsB {
 
     /* contructor: creates a partition of n elements. */
     /* Each element is in a separate disjoint set */
-    DisjointSets(int n) {
+    DisjointSetsB(int n) {
         if (n>0) {
             par = new int[n];
             rank = new int[n];
@@ -81,7 +81,7 @@ public class DisjointSetsB {
 
     public static void main(String[] args) {
 
-        DisjointSets myset = new DisjointSets(6);
+        DisjointSetsB myset = new DisjointSetsB(6);
         System.out.println(myset);
         System.out.println("-> Union 2 and 3");
         myset.union(2,3);

@@ -19,7 +19,7 @@ public class DisjointSetsA {
 
     /* contructor: creates a partition of n elements. */
     /* Each element is in a separate disjoint set */
-    DisjointSets(int n) {
+    void DisjointSetsA(int n) {
         if (n>0) {
             par = new int[n];
             rank = new int[n];
@@ -55,23 +55,36 @@ public class DisjointSetsA {
 
     /* find resentative of element i */
     public int find(int i) {
+        int representative = 0;
 
+        if (par[i] == i) {
+            representative = i;
+        } else {
+            par[i] = find(par[i]);
+            return par[i];
+        }
         /* Fill this method (The statement return 0 is here only to compile) */
-        return 0;
-
+        return representative;
     }
 
     /* merge sets containing elements i and j */
     public int union(int i, int j) {
-
         /* Fill this method (The statement return 0 is here only to compile) */
-        return 0;
-
+        int rep;
+        
+        if (find(i) > find(j)){
+            rep = par[find(j)];
+            par[find(i)] = rep;
+        } else {
+            rep = par[find(i)];
+            par[find(j)] = rep;
+        }
+        return rep;
     }
 
     public static void main(String[] args) {
 
-        DisjointSets myset = new DisjointSets(6);
+        DisjointSetsA myset = new DisjointSetsA(6);
         System.out.println(myset);
         System.out.println("-> Union 2 and 3");
         myset.union(2,3);

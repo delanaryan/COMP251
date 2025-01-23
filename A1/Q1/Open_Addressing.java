@@ -105,7 +105,7 @@ public class Open_Addressing {
                 int hash = probe(key, i); 
                 
                 if (Table[hash] == -1) { 
-                    return collisions;
+                    return 1;
                 }
 
                 if (Table[hash] == key) { 
