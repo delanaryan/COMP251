@@ -72,7 +72,19 @@ public class Open_Addressing {
      /**Inserts key k into hash table. Returns the number of collisions encountered*/
         public int insertKey(int key){
             //TODO : implement this and change the return statement.
-            return -1;
+            int collisions = 0; // Initialize collision counter
+    
+            for (int i = 0; i < m; i++) { 
+                int hash = probe(key, i);
+            
+                if (Table[hash] == -1) { 
+                    Table[hash] = key; 
+                    return collisions;
+                } else {
+                    collisions++;
+                }
+            }
+            return collisions;
         }
 
         /**Sequentially inserts a list of keys into the HashTable. Outputs total number of collisions */
@@ -87,7 +99,35 @@ public class Open_Addressing {
          /**Inserts key k into hash table. Returns the number of collisions encountered*/
         public int removeKey(int key){
             //TODO: implement this and change the return statement
+            int collisions = 0;
 
-            return -1;
+            for (int i = 0; i < m; i++) { 
+                int hash = probe(key, i); 
+                
+                if (Table[hash] == -1) { 
+                    return collisions;
+                }
+
+                if (Table[hash] == key) { 
+                    Table[hash] = -1; 
+                    return collisions;
+                }
+                collisions++;
+            }
+            return collisions;
+        }
+
+        public static void main(String[] args) {
+            Open_Addressing openAddressing = new Open_Addressing(10, 0, -1); // Create hash table with w = 10, seed = 0, and random A
+            
+            openAddressing.insertKey(32);
+            openAddressing.insertKey(52);
+            openAddressing.insertKey(72);
+            openAddressing.removeKey(52);
+            openAddressing.insertKey(92);
+        
+            System.out.println("Table[13]: " + openAddressing.Table[13]); // Expected: 32
+            System.out.println("Table[14]: " + openAddressing.Table[14]); // Expected: 92
+            System.out.println("Table[15]: " + openAddressing.Table[15]); // Expected: 72
         }
 }
