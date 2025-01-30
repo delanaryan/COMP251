@@ -1,4 +1,4 @@
-package A1.Q2;
+
 
 /****************************
 *
@@ -54,8 +54,16 @@ public class DisjointSetsB {
     /* find resentative of element i */
     public int find(int i) {
 
+        int representative = 0;
+
+        if (par[i] == i) {
+            representative = i;
+        } else {
+            par[i] = find(par[i]);
+            return par[i];
+        }
         /* Fill this method (The statement return 0 is here only to compile) */
-        return 0;
+        return representative;
 
     }
 
@@ -63,20 +71,51 @@ public class DisjointSetsB {
     public int union(int i, int j) {
 
         /* Fill this method (The statement return 0 is here only to compile) */
-        return 0;
+        int repI = find(i);
+        int repJ = find(j);
+
+        if (repI == repJ) return repI; // Already in the same set
+
+        if (rank[repI] > rank[repJ]) {
+            par[repJ] = repI;
+            return repI;
+        } else if (rank[repI] < rank[repJ]) {
+            par[repI] = repJ;
+            return repJ;
+        } else {
+            par[repJ] = repI;
+            rank[repI]++;
+            return repI;
+        }
 
     }
 
     /* move i to the set containing j */
     public void move(int i, int j) {
-
+        int repI = find(i); 
+        int repJ = find(j); 
+    
+        if (repI == repJ) return; 
+    
+        par[i] = i;
+    
+        union(i, j); 
     }
 
     /* return the sum of elements in the set of i */
     public int sum_elements(int i) {
+        int sum = 0;
+
+        int root = find(i);
+
+        for (int j=0; j < par.length; j++){
+            if (find(j) == root){
+                sum += j;
+            }
+        }
 
         /* Fill this method */
-        return 0;
+        return sum;
     }
 
     public static void main(String[] args) {
