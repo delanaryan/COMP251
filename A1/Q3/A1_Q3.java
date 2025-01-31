@@ -13,6 +13,21 @@ import java.util.*;
 public class A1_Q3 {
 	
 	public static ArrayList<String> Discussion_Board(String[] posts){
+		HashMap<String, ArrayList<String>> users = new HashMap<String, ArrayList<String>>();
+
+		for (String strings : posts) {
+			String[] messages =  strings.split(" ");
+			String userName = messages[0];
+
+			for (String word : messages){
+				if (users.containsKey(userName)){
+					users.get(username).add(word);
+				} else {
+					users.put(userName, word);
+				}
+			}
+
+		}
         return null;
 	}
 
