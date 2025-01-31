@@ -14,6 +14,7 @@ public class DisjointSetsBTest {
 
         // Test Case 4: Union two sets
         ds.union(3, 5);
+        System.out.println("Expected {3,4,5}");
         System.out.println(ds); // {3,4,5} should be one set
 
         // Test Case 5: Sum of elements in a set
@@ -21,6 +22,7 @@ public class DisjointSetsBTest {
 
         // Test Case 6: Move element to another set
         ds.move(4, 1);
+        System.out.println("Expected {1,2,4} and {3,5}");
         System.out.println(ds); // {1,2,4} and {3,5}
 
         // Test Case 7: Sum again
@@ -29,6 +31,7 @@ public class DisjointSetsBTest {
 
         // Test Case 8: Union across moved sets
         ds.union(2, 3);
+        System.out.println("Sould merge everything");
         System.out.println(ds); // Should merge everything
 
         // Test Case 9: Edge cases

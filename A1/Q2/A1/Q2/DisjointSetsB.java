@@ -18,7 +18,8 @@ public class DisjointSetsB {
     /* contructor: creates a partition of n elements. */
     /* Each element is in a separate disjoint set */
     DisjointSetsB(int n) {
-        if (n>0) {
+        n += 1;
+        if (n>=0) {
             par = new int[n];
             rank = new int[n];
             for (int i=0; i<this.par.length; i++) {
@@ -26,6 +27,7 @@ public class DisjointSetsB {
             }
         }
     }
+
 
     public String toString(){
         int pari,countsets=0;
@@ -95,11 +97,28 @@ public class DisjointSetsB {
         int repI = find(i); 
         int repJ = find(j); 
     
-        if (repI == repJ) return; 
+        if (repI == repJ) return; // Already in the same set
     
-        par[i] = i;
+        if (par[i] == i) { // i is a root node
+            int newRoot = -1;
+            for (int k = 0; k < par.length; k++) {
+                if (find(k) == repI && k != i) { // Find a new root
+                    newRoot = k;
+                    break;
+                }
+            }
     
-        union(i, j); 
+            if (newRoot != -1) {
+                for (int k = 0; k < par.length; k++) {
+                    if (find(k) == repI && k != i) { 
+                        par[k] = newRoot; // Update all nodes in i's set
+                    }
+                }
+            }
+        }
+    
+        par[i] = i; // Temporarily isolate i
+        union(i, j); // Attach i to j's set
     }
 
     /* return the sum of elements in the set of i */
@@ -122,23 +141,23 @@ public class DisjointSetsB {
 
         DisjointSetsB myset = new DisjointSetsB(6);
         System.out.println(myset);
-        System.out.println("-> Union 2 and 3");
-        myset.union(2,3);
+        System.out.println("-> Union 1 and 2");
+        myset.union(1,2);
         System.out.println(myset);
-        System.out.println("-> Union 2 and 3");
-        myset.union(2,3);
+        System.out.println("-> Move 3 and 4");
+        myset.move(3,4);
         System.out.println(myset);
-        System.out.println("-> Union 2 and 1");
-        myset.union(2,1);
+        System.out.println("-> Union 3 and 5 ");
+        myset.union(3,5);
         System.out.println(myset);
-        System.out.println("-> Union 4 and 5");
-        myset.union(4,5);
+        System.out.println("-> Sum 4");
+        System.out.println(myset.sum_elements(4));
         System.out.println(myset);
-        System.out.println("-> Union 3 and 1");
-        myset.union(3,1);
+        System.out.println("->Move 4 and 1");
+        myset.move(4,1);
         System.out.println(myset);
-        System.out.println("-> Union 2 and 4");
-        myset.union(2,4);
+        System.out.println("-> Sum 4");
+        System.out.println(myset.sum_elements(4));
         System.out.println(myset);
 
     }
