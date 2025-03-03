@@ -3,43 +3,38 @@ import java.util.*;
 public class A2_Q3 {
     public static String directions(int[] distances) {
         int steps = distances.length;
-        int sum = 0;
-
-        // Calculate the total sum of steps
-        for (int d : distances) {
-            sum += d;
-        }
-
-        int maxH = 2 * sum; // Maximum possible height to handle positive & negative values
+        int maxH = 1000; // Mt Royal has at most 1000 stairs
         boolean[][] dp = new boolean[steps + 1][maxH + 1];
-        dp[0][sum] = true; // Offset sum to handle negative heights
-
         char[][] path = new char[steps + 1][maxH + 1];
+
+        dp[0][0] = true; // Start at street level
 
         // DP Table Filling
         for (int i = 0; i < steps; i++) {
             for (int j = 0; j <= maxH; j++) {
-                if (!dp[i][j]) continue;
+                if (!dp[i][j]) continue; // Skip invalid states
 
-                // Try moving DOWN first (minimizing height deviation)
-                if (j - distances[i] >= 0) {
-                    dp[i + 1][j - distances[i]] = true;
-                    path[i + 1][j - distances[i]] = 'D';
+                int down = j - distances[i];
+                int up = j + distances[i];
+
+                // Move down if within bounds
+                if (down >= 0 && !dp[i + 1][down]) {
+                    dp[i + 1][down] = true;
+                    path[i + 1][down] = 'D';
                 }
-                // Then try moving UP
-                if (j + distances[i] <= maxH) {
-                    dp[i + 1][j + distances[i]] = true;
-                    path[i + 1][j + distances[i]] = 'U';
+                // Move up if within bounds
+                if (up <= maxH && !dp[i + 1][up]) {
+                    dp[i + 1][up] = true;
+                    path[i + 1][up] = 'U';
                 }
             }
         }
 
-        // If we can't return to the start height, return "IMPOSSIBLE"
-        if (!dp[steps][sum]) return "IMPOSSIBLE";
+        if (!dp[steps][0]) return "IMPOSSIBLE";
 
         // Backtrack to reconstruct the path
         char[] result = new char[steps];
-        int h = sum;
+        int h = 0;
 
         for (int i = steps; i > 0; i--) {
             result[i - 1] = path[i][h];
